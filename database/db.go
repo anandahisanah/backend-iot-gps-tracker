@@ -40,7 +40,7 @@ func StartDB() {
 	}
 
 	fmt.Println("success connecting to database")
-	db.Debug().AutoMigrate(models.Gps{})
+	db.Debug().AutoMigrate(models.Gps{}, models.Chat{})
 }
 
 func GetDB() *gorm.DB {
