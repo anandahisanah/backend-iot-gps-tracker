@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gps-tracker/database"
-	"gps-tracker/routes"
+	"backend-gps-tracker/database"
+	"backend-gps-tracker/routes"
 )
 
 func main() {

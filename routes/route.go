@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"gps-tracker/controllers"
+	"backend-gps-tracker/controllers"
 	"os"
 
 	"github.com/gin-gonic/gin"
