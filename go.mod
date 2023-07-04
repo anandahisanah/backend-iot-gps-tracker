@@ -1,4 +1,4 @@
-module gps-tracker
+module backend-gps-tracker
 
 go 1.19
 

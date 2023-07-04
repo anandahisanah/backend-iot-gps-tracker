@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"backend-gps-tracker/database"
+	"backend-gps-tracker/models"
 	"encoding/json"
-	"gps-tracker/database"
-	"gps-tracker/models"
 	"net/http"
 	"time"
 

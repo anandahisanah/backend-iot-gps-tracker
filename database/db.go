@@ -1,7 +1,7 @@
 package database
 
 import (
-	"gps-tracker/models"
+	"backend-gps-tracker/models"
 	"fmt"
 	"log"
 	"os"
