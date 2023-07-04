@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type RequestGps struct {
+type requestGps struct {
 	Link string `json:"link"`
 }
 
@@ -18,17 +18,14 @@ func CreateGps(c *gin.Context) {
 	db := database.GetDB()
 	w := c.Writer
 
-	var request RequestGps
-
 	// verify json
-	err := c.ShouldBindJSON(&request)
-
-	// error invalid json
-	if err != nil {
+	var request requestGps
+	if err := c.BindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    400,
-			"status":  "error",
-			"message": "Invalid JSON data",
+			"code":             400,
+			"status":           "error",
+			"message":          "Invalid JSON data",
+			"original_message": err,
 		})
 		return
 	}
@@ -40,14 +37,12 @@ func CreateGps(c *gin.Context) {
 	}
 
 	// create
-	errSave := db.Create(&Gps)
-
-	// error saving
-	if errSave != nil {
+	if err := db.Create(&Gps).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    400,
-			"status":  "error",
-			"message": "Error saving GPS data",
+			"code":             400,
+			"status":           "error",
+			"message":          "Error saving GPS data",
+			"original_message": err,
 		})
 		return
 	}
