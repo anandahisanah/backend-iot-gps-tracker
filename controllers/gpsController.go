@@ -31,13 +31,14 @@ func CreateGps(c *gin.Context) {
 	}
 
 	// define struct
-	Gps := models.Gps{
-		Datetime: time.Now(),
+	now := time.Now()
+	gps := models.Gps{
+		Datetime: &now,
 		Link:     request.Link,
 	}
 
 	// create
-	if err := db.Create(&Gps).Error; err != nil {
+	if err := db.Create(&gps).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":             400,
 			"status":           "error",
@@ -54,7 +55,7 @@ func CreateGps(c *gin.Context) {
 		"code":    200,
 		"status":  "success",
 		"message": "Gps Saved",
-		"data":    Gps,
+		"data":    gps,
 	})
 
 	w.WriteHeader(http.StatusOK)
