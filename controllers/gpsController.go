@@ -26,6 +26,7 @@ func CreateGps(c *gin.Context) {
 	// error invalid json
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
 			"status":  "error",
 			"message": "Invalid JSON data",
 		})
@@ -44,6 +45,7 @@ func CreateGps(c *gin.Context) {
 	// error saving
 	if errSave != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
 			"status":  "error",
 			"message": "Error saving GPS data",
 		})
