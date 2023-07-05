@@ -12,7 +12,8 @@ var PORT = os.Getenv("PORT")
 func StartServer() *gin.Engine {
 	router := gin.Default()
 
-	router.POST("/gps", controllers.CreateGps)
+	router.GET("/", controllers.GetChat)
+	router.POST("/chat", controllers.CreateChat)
 
 	// port
 	if PORT == "" {
