@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"backend-gps-tracker/controllers"
+	"backend-iot-gps-tracker/controllers"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +12,8 @@ var PORT = os.Getenv("PORT")
 func StartServer() *gin.Engine {
 	router := gin.Default()
 
-	router.POST("/gps", controllers.CreateGps)
+	router.GET("/", controllers.GetChat)
+	router.POST("/chat", controllers.CreateChat)
 
 	// port
 	if PORT == "" {

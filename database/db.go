@@ -1,7 +1,7 @@
 package database
 
 import (
-	"backend-gps-tracker/models"
+	"backend-iot-gps-tracker/models"
 	"fmt"
 	"log"
 	"os"
@@ -40,7 +40,7 @@ func StartDB() {
 	}
 
 	fmt.Println("success connecting to database")
-	db.Debug().AutoMigrate(models.Gps{}, models.Chat{})
+	db.Debug().AutoMigrate(models.Chat{})
 }
 
 func GetDB() *gorm.DB {
