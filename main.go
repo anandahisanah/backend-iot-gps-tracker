@@ -1,8 +1,8 @@
 package main
 
 import (
-	"backend-gps-tracker/database"
-	"backend-gps-tracker/routes"
+	"backend-iot-gps-tracker/database"
+	"backend-iot-gps-tracker/routes"
 )
 
 func main() {

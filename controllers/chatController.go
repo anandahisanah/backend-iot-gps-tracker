@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"backend-gps-tracker/database"
-	"backend-gps-tracker/models"
+	"backend-iot-gps-tracker/database"
+	"backend-iot-gps-tracker/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

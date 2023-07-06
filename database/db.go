@@ -1,7 +1,7 @@
 package database
 
 import (
-	"backend-gps-tracker/models"
+	"backend-iot-gps-tracker/models"
 	"fmt"
 	"log"
 	"os"

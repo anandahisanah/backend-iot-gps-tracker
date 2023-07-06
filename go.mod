@@ -1,4 +1,4 @@
-module backend-gps-tracker
+module backend-iot-gps-tracker
 
 go 1.19
 
