@@ -63,7 +63,19 @@ func CreateChat(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    400,
 			"status":  "failed",
-			"message": "Failed to create event",
+			"message": "Failed to create Chat",
+			"data":    nil,
+		})
+		return
+	}
+
+	// get
+	var chats []models.Chat
+	if err := db.Find(&chats).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"status":  "failed",
+			"message": "Failed to get Chat",
 			"data":    nil,
 		})
 		return
@@ -74,6 +86,6 @@ func CreateChat(c *gin.Context) {
 		"code":    201,
 		"status":  "success",
 		"message": "Success",
-		"data":    chat,
+		"data":    chats,
 	})
 }
