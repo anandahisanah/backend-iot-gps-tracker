@@ -22,6 +22,7 @@ func StartServer() *gin.Engine {
 	router.GET("/", controllers.GetChat)
 	router.POST("/chat", controllers.CreateChat)
 	router.GET("/list", controllers.GetChat)
+	router.POST("/delete", controllers.DeleteChat)
 
 	// port
 	if PORT == "" {

@@ -89,3 +89,31 @@ func CreateChat(c *gin.Context) {
 		"data":    chats,
 	})
 }
+
+func DeleteChat(c *gin.Context) {
+	db := database.GetDB()
+
+	// get
+	var chats []models.Chat
+	if err := db.Find(&chats).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"status":  "failed",
+			"message": "Failed to get Chat",
+			"data":    nil,
+		})
+		return
+	}
+	
+	for _, i := range chats {
+		db.Delete(i)
+	}
+
+	// response
+	c.JSON(http.StatusOK, gin.H{
+		"code":    200,
+		"status":  "success",
+		"message": "Deleted Success",
+		"data":    nil,
+	})
+}
