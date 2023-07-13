@@ -15,7 +15,7 @@ func StartServer() *gin.Engine {
 
 	// config CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{"http://localhost:3000", "https://gps-tracker.anandahisanah.dev"}
 	config.AllowMethods = []string{"GET", "POST"}
 	router.Use(cors.New(config))
 
