@@ -100,7 +100,7 @@ func CreateChatByUrl(c *gin.Context) {
 	// define model
 	chat := models.Chat{
 		Username: "System",
-		Message:  "https://maps.google.com/?q=" + paramLat + paramLon,
+		Message:  "https://maps.google.com/?q=" + paramLat + "," + paramLon,
 	}
 
 	// create
