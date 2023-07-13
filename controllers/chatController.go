@@ -4,6 +4,7 @@ import (
 	"backend-iot-gps-tracker/database"
 	"backend-iot-gps-tracker/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,28 +15,49 @@ type requestCreate struct {
 }
 
 func GetChat(c *gin.Context) {
-	db := database.GetDB()
+    db := database.GetDB()
 
-	// get
-	var chats []models.Chat
-	if err := db.Find(&chats).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    400,
-			"status":  "failed",
-			"message": "Failed to get Chat",
-			"data":    nil,
-		})
-		return
-	}
+    paramLimit := c.Query("limit")
+    var limit int
 
-	// response
-	c.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"status":  "success",
-		"message": "Success",
-		"data":    chats,
-	})
+    // paramLimit into int
+    if paramLimit != "" {
+        limit64, err := strconv.ParseInt(paramLimit, 10, 32)
+        if err != nil {
+            c.JSON(http.StatusBadRequest, gin.H{
+                "code":    400,
+                "status":  "failed",
+                "message": "Invalid limit value",
+                "data":    nil,
+            })
+            return
+        }
+        limit = int(limit64)
+    }
+
+    // get data with limit
+    var chats []models.Chat
+    if limit > 0 {
+        db = db.Limit(limit)
+    }
+    if err := db.Find(&chats).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{
+            "code":    400,
+            "status":  "failed",
+            "message": "Failed to get Chat",
+            "data":    nil,
+        })
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "code":    200,
+        "status":  "success",
+        "message": "Chat retrieved successfully",
+        "data":    chats,
+    })
 }
+
 
 func CreateChat(c *gin.Context) {
 	db := database.GetDB()
