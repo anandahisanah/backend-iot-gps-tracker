@@ -15,49 +15,48 @@ type requestCreate struct {
 }
 
 func GetChat(c *gin.Context) {
-    db := database.GetDB()
+	db := database.GetDB()
 
-    paramLimit := c.Query("limit")
-    var limit int
+	paramLimit := c.Query("limit")
+	var limit int
 
-    // paramLimit into int
-    if paramLimit != "" {
-        limit64, err := strconv.ParseInt(paramLimit, 10, 32)
-        if err != nil {
-            c.JSON(http.StatusBadRequest, gin.H{
-                "code":    400,
-                "status":  "failed",
-                "message": "Invalid limit value",
-                "data":    nil,
-            })
-            return
-        }
-        limit = int(limit64)
-    }
+	// paramLimit into int
+	if paramLimit != "" {
+		limit64, err := strconv.ParseInt(paramLimit, 10, 32)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"code":    400,
+				"status":  "failed",
+				"message": "Invalid limit value",
+				"data":    nil,
+			})
+			return
+		}
+		limit = int(limit64)
+	}
 
-    // get data with limit
-    var chats []models.Chat
-    if limit > 0 {
-        db = db.Limit(limit)
-    }
-    if err := db.Find(&chats).Error; err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{
-            "code":    400,
-            "status":  "failed",
-            "message": "Failed to get Chat",
-            "data":    nil,
-        })
-        return
-    }
+	// get data with limit
+	var chats []models.Chat
+	if limit > 0 {
+		db = db.Limit(limit)
+	}
+	if err := db.Order("id desc").Find(&chats).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"status":  "failed",
+			"message": "Failed to get Chat",
+			"data":    nil,
+		})
+		return
+	}
 
-    c.JSON(http.StatusOK, gin.H{
-        "code":    200,
-        "status":  "success",
-        "message": "Chat retrieved successfully",
-        "data":    chats,
-    })
+	c.JSON(http.StatusOK, gin.H{
+		"code":    200,
+		"status":  "success",
+		"message": "Chat retrieved successfully",
+		"data":    chats,
+	})
 }
-
 
 func CreateChat(c *gin.Context) {
 	db := database.GetDB()
