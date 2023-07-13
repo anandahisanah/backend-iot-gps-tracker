@@ -90,6 +90,51 @@ func CreateChat(c *gin.Context) {
 	})
 }
 
+func CreateChatByUrl(c *gin.Context) {
+	db := database.GetDB()
+
+	// param
+	paramLat := c.Param("lat")
+	paramLon := c.Param("lon")
+
+	// define model
+	chat := models.Chat{
+		Username: "System",
+		Message:  "https://maps.google.com/?q=" + paramLat + paramLon,
+	}
+
+	// create
+	if err := db.Create(&chat).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"status":  "failed",
+			"message": "Failed to create Chat",
+			"data":    nil,
+		})
+		return
+	}
+
+	// get
+	var chats []models.Chat
+	if err := db.Find(&chats).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"status":  "failed",
+			"message": "Failed to get Chat",
+			"data":    nil,
+		})
+		return
+	}
+
+	// response
+	c.JSON(http.StatusCreated, gin.H{
+		"code":    201,
+		"status":  "success",
+		"message": "Success",
+		"data":    chats,
+	})
+}
+
 func DeleteChat(c *gin.Context) {
 	db := database.GetDB()
 
@@ -104,7 +149,7 @@ func DeleteChat(c *gin.Context) {
 		})
 		return
 	}
-	
+
 	for _, i := range chats {
 		db.Delete(i)
 	}
